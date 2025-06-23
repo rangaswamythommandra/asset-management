@@ -6,13 +6,12 @@ import { PlusIcon, PencilIcon, TrashIcon, ArrowUturnLeftIcon } from '@heroicons/
 import type { Assignment, Asset, User, FilterOptions } from '../types';
 import apiService from '../services/api';
 import toast from 'react-hot-toast';
-import { useAuth } from '../contexts/AuthContext';
 
 const schema = yup.object({
   assetId: yup.number().required('Asset is required'),
   assignedToId: yup.number().required('Personnel is required'),
   assignmentDate: yup.string().required('Assignment date is required'),
-  notes: yup.string().nullable().default(''),
+  notes: yup.string().default(''),
 }).required();
 
 type AssignmentFormData = yup.InferType<typeof schema>;
@@ -25,7 +24,6 @@ const Assignments: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [editingAssignment, setEditingAssignment] = useState<Assignment | null>(null);
   const [filters, setFilters] = useState<FilterOptions>({});
-  const { user } = useAuth();
 
   const {
     register,
@@ -65,7 +63,7 @@ const Assignments: React.FC = () => {
         assetId: data.assetId,
         assignedToId: data.assignedToId,
         assignmentDate: data.assignmentDate,
-        notes: data.notes,
+        notes: data.notes ?? "",
       };
       if (editingAssignment) {
         await apiService.updateAssignment(editingAssignment.id, assignmentData);

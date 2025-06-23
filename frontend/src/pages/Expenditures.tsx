@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
-import type { Expenditure, Asset, Base, User, FilterOptions } from '../types';
+import type { Expenditure, Asset, Base, FilterOptions } from '../types';
 import apiService from '../services/api';
 import toast from 'react-hot-toast';
 

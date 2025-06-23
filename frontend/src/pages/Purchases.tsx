@@ -14,7 +14,7 @@ const schema = yup.object({
   unitPrice: yup.number().positive('Unit price must be positive').required('Unit price is required'),
   purchaseDate: yup.string().required('Purchase date is required'),
   supplier: yup.string().required('Supplier is required'),
-  description: yup.string(),
+  description: yup.string().optional(),
 }).required();
 
 type PurchaseFormData = yup.InferType<typeof schema>;

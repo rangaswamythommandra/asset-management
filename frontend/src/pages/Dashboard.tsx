@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   CurrencyDollarIcon, 
@@ -27,7 +26,6 @@ export default function Dashboard({}: DashboardProps) {
   const [bases, setBases] = useState<Base[]>([]);
   const [assetTypes, setAssetTypes] = useState<AssetType[]>([]);
   const [filters, setFilters] = useState<FilterOptions>({});
-  const [showNetMovementDetails, setShowNetMovementDetails] = useState(false);
   const [showNetMovementModal, setShowNetMovementModal] = useState(false);
   const [netMovementDetails, setNetMovementDetails] = useState<NetMovementDetails | null>(null);
 
