@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import type { SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
@@ -14,7 +15,7 @@ const schema = yup.object({
   unitPrice: yup.number().positive('Unit price must be positive').required('Unit price is required'),
   purchaseDate: yup.string().required('Purchase date is required'),
   supplier: yup.string().required('Supplier is required'),
-  description: yup.string().optional(),
+  description: yup.string().required().default(''),
 }).required();
 
 type PurchaseFormData = yup.InferType<typeof schema>;
@@ -64,7 +65,7 @@ const Purchases: React.FC = () => {
     }
   };
 
-  const onSubmit = async (data: PurchaseFormData) => {
+  const onSubmit: SubmitHandler<PurchaseFormData> = async (data) => {
     try {
       if (editingPurchase) {
         await apiService.updatePurchase(editingPurchase.id, data);
@@ -73,7 +74,6 @@ const Purchases: React.FC = () => {
         await apiService.createPurchase(data);
         toast.success('Purchase recorded successfully');
       }
-
       reset();
       setShowForm(false);
       setEditingPurchase(null);

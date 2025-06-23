@@ -23,7 +23,7 @@ const Register: React.FC = () => {
   const [error, setError] = useState('');
   const [bases, setBases] = useState<Base[]>([]);
   const [loadingBases, setLoadingBases] = useState(true);
-  const { register: registerUser, login } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const {
