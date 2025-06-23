@@ -10,6 +10,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import type { DashboardMetrics, FilterOptions, Base, AssetType } from '../types';
 import apiService from '../services/api';
 import toast from 'react-hot-toast';
+import { useState, useEffect } from 'react';
 
 interface DashboardProps {}
 
@@ -154,7 +155,7 @@ export default function Dashboard({}: DashboardProps) {
               onChange={(e) => setFilters({ ...filters, baseId: e.target.value ? Number(e.target.value) : undefined })}
             >
               <option value="">All Bases</option>
-              {bases.map((base) => (
+              {bases.map((base: Base) => (
                 <option key={base.id} value={base.id}>
                   {base.name}
                 </option>
@@ -171,7 +172,7 @@ export default function Dashboard({}: DashboardProps) {
               onChange={(e) => setFilters({ ...filters, assetTypeId: e.target.value ? Number(e.target.value) : undefined })}
             >
               <option value="">All Types</option>
-              {assetTypes.map((type) => (
+              {assetTypes.map((type: AssetType) => (
                 <option key={type.id} value={type.id}>
                   {type.name}
                 </option>
