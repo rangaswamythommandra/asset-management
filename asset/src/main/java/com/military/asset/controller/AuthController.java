@@ -176,6 +176,59 @@ public class AuthController {
         }
     }
 
+    @PostMapping("/fix-passwords")
+    public ResponseEntity<String> fixPasswords() {
+        try {
+            // Update admin password to: admin123
+            User admin = userService.findByUsername("admin").orElseThrow();
+            admin.setPassword(passwordEncoder.encode("admin123"));
+            userService.save(admin);
+            
+            // Update commander1 password to: commander123
+            User commander = userService.findByUsername("commander1").orElseThrow();
+            commander.setPassword(passwordEncoder.encode("commander123"));
+            userService.save(commander);
+            
+            // Update logistics1 password to: logistics123
+            User logistics = userService.findByUsername("logistics1").orElseThrow();
+            logistics.setPassword(passwordEncoder.encode("logistics123"));
+            userService.save(logistics);
+            
+            return ResponseEntity.ok("Passwords fixed: admin=admin123, commander1=commander123, logistics1=logistics123");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Failed to fix passwords: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/check-passwords")
+    public ResponseEntity<?> checkPasswords() {
+        try {
+            User admin = userService.findByUsername("admin").orElseThrow();
+            User commander = userService.findByUsername("commander1").orElseThrow();
+            User logistics = userService.findByUsername("logistics1").orElseThrow();
+            
+            return ResponseEntity.ok(Map.of(
+                "admin", Map.of(
+                    "username", admin.getUsername(),
+                    "passwordHash", admin.getPassword(),
+                    "admin123_matches", passwordEncoder.matches("admin123", admin.getPassword())
+                ),
+                "commander1", Map.of(
+                    "username", commander.getUsername(),
+                    "passwordHash", commander.getPassword(),
+                    "commander123_matches", passwordEncoder.matches("commander123", commander.getPassword())
+                ),
+                "logistics1", Map.of(
+                    "username", logistics.getUsername(),
+                    "passwordHash", logistics.getPassword(),
+                    "logistics123_matches", passwordEncoder.matches("logistics123", logistics.getPassword())
+                )
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error checking passwords: " + e.getMessage());
+        }
+    }
+
     public static class AuthRequest {
         private String username;
         private String password;

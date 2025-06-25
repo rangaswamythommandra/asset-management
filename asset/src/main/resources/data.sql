@@ -17,11 +17,14 @@ INSERT INTO asset_type (id, name, category) VALUES
 (7, 'Generator', 'EQUIPMENT'),
 (8, 'Tent', 'EQUIPMENT');
 
--- Insert default admin user (password: admin123)
+-- Insert users with updated passwords
+-- admin password: admin123
+-- commander1 password: commander123  
+-- logistics1 password: logistics123
 INSERT INTO user (id, username, password, role, base_id) VALUES 
-(1, 'admin', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVEFDa', 'ADMIN', 1),
-(2, 'commander1', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVEFDa', 'BASE_COMMANDER', 1),
-(3, 'logistics1', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVEFDa', 'LOGISTICS_OFFICER', 1);
+(1, 'admin', '$2a$10$AKlJXMZ6goBvPa7bd/DaK.p.l0QaDjCu5HzsI8hSu50bKyWYfvHI.', 'ADMIN', 1),
+(2, 'commander1', '$2a$10$6MqA3Ycu7hTt6mWJvjDShOlbDhmZfVmbyi87qBiW8eJYYTQmxJWJG', 'BASE_COMMANDER', 1),
+(3, 'logistics1', '$2a$10$u/D3HQ.Y/Q69aFW81t6Wr.oc5RVQ2PWnPnwQolDpUsKsc6O3wkdue', 'LOGISTICS_OFFICER', 1);
 
 -- Insert sample assets
 INSERT INTO asset (id, serial_number, status, asset_type_id, base_id) VALUES 
@@ -70,3 +73,6 @@ INSERT INTO audit_log (id, timestamp, action, entity, entity_id, details, user_i
 (2, '2024-01-20 14:15:00', 'ASSIGN', 'ASSET', 1, 'Assigned tank TANK-001 to Sgt. John Smith', 2),
 (3, '2024-02-01 09:45:00', 'TRANSFER', 'TRANSFER', 1, 'Transferred 2 tanks from Fort Hood to Fort Bragg', 1),
 (4, '2024-03-01 16:20:00', 'MAINTENANCE', 'ASSET', 4, 'Asset HUMVEE-002 placed under maintenance', 3);
+
+UPDATE user SET password = '$2a$10$6MqA3Ycu7hTt6mWJvjDShOlbDhmZfVmbyi87qBiW8eJYYTQmxJWJG' WHERE username = 'commander1';
+UPDATE user SET password = '$2a$10$u/D3HQ.Y/Q69aFW81t6Wr.oc5RVQ2PWnPnwQolDpUsKsc6O3wkdue' WHERE username = 'logistics1';
